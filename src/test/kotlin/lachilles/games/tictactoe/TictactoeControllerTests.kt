@@ -1,20 +1,22 @@
 package lachilles.games.tictactoe
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.jupiter.api.Assertions.assertArrayEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import lachilles.games.tictactoe.service.TicTacToeService
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Bean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.beans.BeanProperty
 import java.util.*
 
 @ExtendWith(SpringExtension::class)
-@WebMvcTest(controllers = [TicTacToeController::class])
+@WebMvcTest(controllers = [TicTacToeController::class, TicTacToeService::class])
 class TictactoeControllerTests {
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -22,12 +24,14 @@ class TictactoeControllerTests {
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
+
     // assert that a gameId was returned using a map with valid gameIds
     // add createPlayer method add playernames to the data object.
     @Test
     fun testCreate() {
         val game = createGame()
         assertNotNull(UUID.fromString(game.id))
+        assertTrue(game.players.isEmpty())
     }
 
     @Test
@@ -35,7 +39,8 @@ class TictactoeControllerTests {
         val game = createGame()
         addPlayerToGame(game, "lianne")
         val gameWithPlayers = addPlayerToGame(game, "paul")
-        // assertArrayEquals(['lianne', 'paul'], gameWithPlayers.players)
+        assertTrue(gameWithPlayers.players.contains(PlayerResponse("lianne")))
+        assertTrue(gameWithPlayers.players.contains(PlayerResponse("paul")))
     }
 
     @Test
