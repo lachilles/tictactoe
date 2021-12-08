@@ -1,18 +1,19 @@
 package lachilles.games.tictactoe
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import lachilles.games.tictactoe.api.GameResponse
+import lachilles.games.tictactoe.api.PlayerResponse
+import lachilles.games.tictactoe.api.TicTacToeController
 import lachilles.games.tictactoe.service.TicTacToeService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.context.annotation.Bean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.beans.BeanProperty
 import java.util.*
 
 @ExtendWith(SpringExtension::class)
@@ -39,6 +40,7 @@ class TictactoeControllerTests {
         val game = createGame()
         addPlayerToGame(game, "lianne")
         val gameWithPlayers = addPlayerToGame(game, "paul")
+        println(gameWithPlayers.board)
         assertTrue(gameWithPlayers.players.contains(PlayerResponse("lianne")))
         assertTrue(gameWithPlayers.players.contains(PlayerResponse("paul")))
     }

@@ -1,7 +1,7 @@
 package lachilles.games.tictactoe.service
 
-import lachilles.games.tictactoe.GameResponse
-import lachilles.games.tictactoe.PlayerResponse
+import lachilles.games.tictactoe.api.GameResponse
+import lachilles.games.tictactoe.api.PlayerResponse
 import org.springframework.stereotype.Service
 
 @Service

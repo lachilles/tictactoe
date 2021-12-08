@@ -1,5 +1,6 @@
-package lachilles.games.tictactoe
+package lachilles.games.tictactoe.api
 
+import lachilles.games.tictactoe.impl.Board
 import lachilles.games.tictactoe.service.InvalidPlayerException
 import lachilles.games.tictactoe.service.TicTacToeService
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,6 +33,10 @@ class TicTacToeController {
             service.addPlayer(game, playerName)
         } catch (d: InvalidPlayerException) {
             throw BadRequestException()
+        }
+        // add board if there's two players
+        if(game.players.size == 2) {
+            game.board = BoardResponse.fromBoard(Board())
         }
         return game
     }
