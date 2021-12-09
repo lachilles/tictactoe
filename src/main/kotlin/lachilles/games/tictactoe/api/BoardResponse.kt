@@ -6,27 +6,35 @@ import lachilles.games.tictactoe.impl.BoardElement
 data class BoardResponse(val elements: List<BoardElementResponse>) {
     companion object{
         fun fromBoard(board: Board): BoardResponse {
-            val mlist = mutableListOf<BoardElementResponse>()
+            val result = mutableListOf<BoardElementResponse>()
             //create a list of BoardElementResponses
             board.streamElements().forEach {
-                    mlist.add(BoardElementResponse.fromBoardElement(it))
+                    result.add(BoardElementResponse.fromBoardElement(it))
             }
             // other way of getting elements using map
 //            val elements = board.streamElements().map { BoardElementResponse.fromBoardElement(it) }.collect(
 //                    Collectors.toList())
 
-            return BoardResponse(mlist)
+            return BoardResponse(result)
         }
     }
 }
 
 data class BoardElementResponse (val row: Int,
-val col: Int, val display: String, val url: String){
+                                 val col: Int,
+                                 val display: String,
+                                 val url: String){
     companion object{
         fun fromBoardElement(element: BoardElement): BoardElementResponse {
-            // add when element.getvalue = 0, return empty sting. 1 = 'x' 2 = 'o'
-            // populate the url when value is a 0 (indicates we can make a move)
-            return BoardElementResponse(element.row, element.col, element.getValue().toString(), "")
+            // when element.getvalue = 0, return empty string. 1 = 'x' 2 = 'o'
+            val display = when (element.getValue()) {
+                1 -> "X"
+                2 -> "O"
+                else -> ""
+            }
+            // populate the url when display is empty (indicates we can make a move)
+            val url = if (!display.isEmpty()) "" else "http://foo"
+            return BoardElementResponse(element.row, element.col, display, url)
         }
     }
 }
