@@ -1,6 +1,7 @@
 package lachilles.games.tictactoe.impl
 
 import java.util.stream.Collectors
+import java.util.stream.Stream
 
 //interface ValidMoveProvider {
 //    fun getValidMoves(): List<Move>
@@ -8,6 +9,10 @@ import java.util.stream.Collectors
 
 
 class Board {
+    fun streamElements(): Stream<BoardElement> {
+        return elements.stream().flatMap { it.stream() }
+    }
+
     fun getElementIterator(): Iterator<List<BoardElement>> {
         return elements.iterator()
     }
