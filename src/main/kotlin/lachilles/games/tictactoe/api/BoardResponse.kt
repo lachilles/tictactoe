@@ -5,7 +5,10 @@ import lachilles.games.tictactoe.impl.BoardElement
 
 data class BoardResponse(val elements: List<BoardElementResponse>) {
     companion object{
-        fun fromBoard(board: Board): BoardResponse {
+        fun fromBoard(board: Board?): BoardResponse? {
+            if (board == null) {
+                return null
+            }
             val result = mutableListOf<BoardElementResponse>()
             //create a list of BoardElementResponses
             board.streamElements().forEach {

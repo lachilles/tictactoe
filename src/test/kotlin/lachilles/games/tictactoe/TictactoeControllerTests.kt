@@ -41,8 +41,8 @@ class TictactoeControllerTests {
         addPlayerToGame(game, "lianne")
         val gameWithPlayers = addPlayerToGame(game, "paul")
         println(gameWithPlayers.board)
-        assertTrue(gameWithPlayers.players.contains(PlayerResponse("lianne")))
-        assertTrue(gameWithPlayers.players.contains(PlayerResponse("paul")))
+        assertTrue(gameWithPlayers.players.contains(PlayerResponse("lianne", 1)))
+        assertTrue(gameWithPlayers.players.contains(PlayerResponse("paul", 2)))
     }
 
     @Test
