@@ -12,13 +12,13 @@ class Board {
         return elements.stream().flatMap { it.stream() }
     }
 
-//    fun takeTurn(player: Player, move: Move) {  //do it command apply function would be Board .taketurn
-//        // handle conversion of string to int
-//        // python pseudocode
-//        // takes a list of the previous state with the memento pattern
-//
-//        elements[move.row][move.column].setState(player.id)
-//    }
+    fun takeTurn(player: Player, move: Move) {  //do it command apply function would be Board .taketurn
+        // handle conversion of string to int
+        // python pseudocode
+        // takes a list of the previous state with the memento pattern
+
+        elements[move.row][move.column].setState(player.id)
+    }
 
 //    fun getWinningSequences(): List<List<BoardElement>> {
 //        val result: MutableList<List<BoardElement>> = emptyList<List<BoardElement>>()

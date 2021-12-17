@@ -2,6 +2,7 @@ package lachilles.games.tictactoe.service
 
 import lachilles.games.tictactoe.impl.Game
 import lachilles.games.tictactoe.impl.InvalidPlayerException
+import lachilles.games.tictactoe.impl.Move
 import lachilles.games.tictactoe.impl.Player
 import org.springframework.stereotype.Service
 
@@ -23,6 +24,12 @@ class TicTacToeService {
     @Throws(InvalidPlayerException::class)
     fun addPlayer(game: Game, playerName: String) {
         game.addPlayer(Player(playerName))
+    }
+
+    fun takeTurn(game: Game, row: Int, col: Int, playerId: Int) {
+        val player = game.getPlayerById(playerId)
+        val move = Move(row, col)
+        game.board?.takeTurn(player, move)
     }
 
 }

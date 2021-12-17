@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
 
@@ -46,6 +45,15 @@ class TictactoeControllerTests {
 
         val g = getGameState(game.id)
         assertEquals(gameWithPlayers, g)
+    }
+
+    @Test
+    fun testTakeTurn() {
+        val game = createGame()
+        addPlayerToGame(game, "lianne")
+        addPlayerToGame(game, "paul")
+        val game2 = takeTurn(game.id, 1,1,1)
+        println(game2.board)
     }
 
     @Test
@@ -91,6 +99,14 @@ class TictactoeControllerTests {
 
     private fun getGameState(gameId: String): GameResponse {
         val result = mockMvc.perform(get("/getGameState/${gameId}")
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andReturn()
+        return objectMapper.readValue<GameResponse>(result.response.contentAsString, GameResponse::class.java)
+    }
+
+    private fun takeTurn(gameId: String, row: Int, col: Int, playerId: Int): GameResponse {
+        val result = mockMvc.perform(put("/takeTurn/${gameId}/${row}/${col}?playerId=$playerId")
                 .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn()

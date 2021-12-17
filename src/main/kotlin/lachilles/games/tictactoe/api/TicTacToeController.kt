@@ -49,4 +49,18 @@ class TicTacToeController {
         return GameResponse.fromGame(game)
     }
 
+    @PutMapping("takeTurn/{gameId}/{row}/{col}")
+    fun takeTurn(@PathVariable("gameId") gameId: String,
+                 @PathVariable("row") row: Int,
+                 @PathVariable("col") col: Int,
+                 @RequestParam playerId: Int): GameResponse
+    {
+        val game = service.findById(gameId)
+        if (game == null) {
+            throw BadRequestException()
+        }
+        service.takeTurn(game, row, col, playerId)
+        return GameResponse.fromGame(game)
+    }
+
 }

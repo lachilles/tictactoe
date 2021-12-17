@@ -23,6 +23,10 @@ class Game(var id: String = UUID.randomUUID().toString()) {
             board = Board()
         }
     }
+
+    fun getPlayerById(playerId: Int): Player {
+        return players[playerId - 1]
+    }
 }
 
 class InvalidPlayerException : Exception()
