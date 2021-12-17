@@ -39,4 +39,14 @@ class TicTacToeController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     class BadRequestException() : RuntimeException()
 
+    @GetMapping("/getGameState/{gameId}")
+    fun getGameState(@PathVariable("gameId") gameId: String): GameResponse
+    {
+        val game = service.findById(gameId)
+        if (game == null) {
+            throw BadRequestException()
+        }
+        return GameResponse.fromGame(game)
+    }
+
 }

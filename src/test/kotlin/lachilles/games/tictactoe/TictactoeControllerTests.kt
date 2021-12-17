@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
 
@@ -40,9 +41,11 @@ class TictactoeControllerTests {
         val game = createGame()
         addPlayerToGame(game, "lianne")
         val gameWithPlayers = addPlayerToGame(game, "paul")
-        println(gameWithPlayers.board)
         assertTrue(gameWithPlayers.players.contains(PlayerResponse("lianne", 1)))
         assertTrue(gameWithPlayers.players.contains(PlayerResponse("paul", 2)))
+
+        val g = getGameState(game.id)
+        assertEquals(gameWithPlayers, g)
     }
 
     @Test
@@ -84,5 +87,13 @@ class TictactoeControllerTests {
                 .andReturn()
         return objectMapper.readValue<GameResponse>(result.response.contentAsString, GameResponse::class.java)
 
+    }
+
+    private fun getGameState(gameId: String): GameResponse {
+        val result = mockMvc.perform(get("/getGameState/${gameId}")
+                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andReturn()
+        return objectMapper.readValue<GameResponse>(result.response.contentAsString, GameResponse::class.java)
     }
 }
