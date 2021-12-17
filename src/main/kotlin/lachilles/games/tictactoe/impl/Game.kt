@@ -8,7 +8,7 @@ class Game(var id: String = UUID.randomUUID().toString()) {
     var board: Board? = null
 
     fun addPlayer(p: Player) {
-        val existing = players.stream().map { p -> p.name }.anyMatch { it == p.name }
+        val existing = players.stream().map { it.name }.anyMatch { it == p.name }
         if (existing) throw InvalidPlayerException()
         if (players.size >= 2) throw InvalidPlayerException()
         players.add(p)
@@ -25,4 +25,4 @@ class Game(var id: String = UUID.randomUUID().toString()) {
     }
 }
 
-class InvalidPlayerException() : Exception()
+class InvalidPlayerException : Exception()

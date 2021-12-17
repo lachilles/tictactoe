@@ -1,7 +1,6 @@
 package lachilles.games.tictactoe.api
 
 import lachilles.games.tictactoe.impl.Game
-import java.util.*
 
 data class GameResponse(var id: String) {
 

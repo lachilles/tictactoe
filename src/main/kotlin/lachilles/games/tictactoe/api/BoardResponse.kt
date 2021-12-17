@@ -29,14 +29,14 @@ data class BoardElementResponse (val row: Int,
                                  val url: String){
     companion object{
         fun fromBoardElement(element: BoardElement): BoardElementResponse {
-            // when element.getvalue = 0, return empty string. 1 = 'x' 2 = 'o'
+            // when element.getValue = 0, return empty string. 1 = 'x' 2 = 'o'
             val display = when (element.getValue()) {
                 1 -> "X"
                 2 -> "O"
                 else -> ""
             }
             // populate the url when display is empty (indicates we can make a move)
-            val url = if (!display.isEmpty()) "" else "http://foo"
+            val url = if (display.isNotEmpty()) "" else "http://foo"
             return BoardElementResponse(element.row, element.col, display, url)
         }
     }

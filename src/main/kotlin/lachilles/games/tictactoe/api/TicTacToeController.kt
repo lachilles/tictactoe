@@ -1,6 +1,5 @@
 package lachilles.games.tictactoe.api
 
-import lachilles.games.tictactoe.impl.Board
 import lachilles.games.tictactoe.impl.InvalidPlayerException
 import lachilles.games.tictactoe.service.TicTacToeService
 import org.springframework.beans.factory.annotation.Autowired
@@ -38,6 +37,6 @@ class TicTacToeController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public class BadRequestException() : RuntimeException() {}
+    class BadRequestException() : RuntimeException()
 
 }

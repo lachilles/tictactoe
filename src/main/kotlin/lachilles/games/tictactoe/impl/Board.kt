@@ -1,6 +1,5 @@
 package lachilles.games.tictactoe.impl
 
-import java.util.stream.Collectors
 import java.util.stream.Stream
 
 //interface ValidMoveProvider {
@@ -11,14 +10,6 @@ import java.util.stream.Stream
 class Board {
     fun streamElements(): Stream<BoardElement> {
         return elements.stream().flatMap { it.stream() }
-    }
-
-    fun getElementIterator(): Iterator<List<BoardElement>> {
-        return elements.iterator()
-    }
-
-    fun getElement(row: Int, col: Int): BoardElement {
-        return elements[row][col]
     }
 
 //    fun takeTurn(player: Player, move: Move) {  //do it command apply function would be Board .taketurn
@@ -56,42 +47,42 @@ class Board {
 //        return result;
 //    }
 
-    internal fun setState(gameState: String) {
-        val it = gameState.splitToSequence(" ", "\n").iterator()
-        for (r in 0..2) {
-            for (c in 0..2) {
-                elements[r][c].setState(toState(it.next()))
-            }
-        }
-    }
+//    internal fun setState(gameState: String) {
+//        val it = gameState.splitToSequence(" ", "\n").iterator()
+//        for (r in 0..2) {
+//            for (c in 0..2) {
+//                elements[r][c].setState(toState(it.next()))
+//            }
+//        }
+//    }
 //
 //    fun empty(move: Move) {
 //        elements[move.row][move.column].setState(0)
 //    }
 
-    private fun toState(symbol: String): Int {
-        return when (symbol) {
-            "." -> 0
-            "X" -> 1
-            "O" -> 2
-            else -> throw Exception("unrecognized symbol $symbol")
-        }
-    }
+//    private fun toState(symbol: String): Int {
+//        return when (symbol) {
+//            "." -> 0
+//            "X" -> 1
+//            "O" -> 2
+//            else -> throw Exception("unrecognized symbol $symbol")
+//        }
+//    }
 
-    val row1 = listOf(
+    private val row1 = listOf(
             BoardElement(0, 0),
             BoardElement(0, 1),
             BoardElement(0, 2)
     )
-    val row2 = listOf(
+    private val row2 = listOf(
             BoardElement(1, 0),
             BoardElement(1, 1),
             BoardElement(1, 2)
     )
-    val row3 = listOf(
+    private val row3 = listOf(
             BoardElement(2, 0),
             BoardElement(2, 1),
             BoardElement(2, 2)
     )
-    val elements = listOf(row1, row2, row3)
+    private val elements = listOf(row1, row2, row3)
 }

@@ -1,7 +1,5 @@
 package lachilles.games.tictactoe.service
 
-import lachilles.games.tictactoe.api.GameResponse
-import lachilles.games.tictactoe.api.PlayerResponse
 import lachilles.games.tictactoe.impl.Game
 import lachilles.games.tictactoe.impl.InvalidPlayerException
 import lachilles.games.tictactoe.impl.Player
