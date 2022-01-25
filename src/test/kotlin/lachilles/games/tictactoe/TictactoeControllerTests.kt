@@ -54,6 +54,7 @@ class TictactoeControllerTests {
         addPlayerToGame(game, "paul")
         val game2 = takeTurn(game.id, 1,1,1)
         println(game2.board)
+        assertEquals("X", game2.board?.elements?.get(4)?.display)
     }
 
     @Test
