@@ -26,10 +26,11 @@ class TicTacToeService {
         game.addPlayer(Player(playerName))
     }
 
+    @Throws(InvalidPlayerException::class)
     fun takeTurn(game: Game, row: Int, col: Int, playerId: Int) {
         val player = game.getPlayerById(playerId)
         val move = Move(row, col)
-        game.board?.takeTurn(player, move)
+        game.takeTurn(player, move)
     }
 
 }

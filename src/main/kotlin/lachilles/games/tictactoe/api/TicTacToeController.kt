@@ -26,25 +26,25 @@ class TicTacToeController {
         //   return result, or error if no game
         val game = service.findById(gameId)
         if (game == null) {
-            throw BadRequestException()
+            throw BadRequestException(message="No such game")
         }
         try {
             service.addPlayer(game, playerName)
         } catch (d: InvalidPlayerException) {
-            throw BadRequestException()
+            throw BadRequestException(message="Cannot add another player")
         }
         return GameResponse.fromGame(game)
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    class BadRequestException() : RuntimeException()
+    class BadRequestException(message: String) : RuntimeException(message)
 
     @GetMapping("/getGameState/{gameId}")
     fun getGameState(@PathVariable("gameId") gameId: String): GameResponse
     {
         val game = service.findById(gameId)
         if (game == null) {
-            throw BadRequestException()
+            throw BadRequestException(message="No such game")
         }
         return GameResponse.fromGame(game)
     }
@@ -57,9 +57,14 @@ class TicTacToeController {
     {
         val game = service.findById(gameId)
         if (game == null) {
-            throw BadRequestException()
+            throw BadRequestException(message="No such game")
         }
-        service.takeTurn(game, row, col, playerId)
+
+        try {
+            service.takeTurn(game, row, col, playerId)
+        } catch (d: InvalidPlayerException) {
+            throw BadRequestException(message="Not your turn")
+        }
         return GameResponse.fromGame(game)
     }
 
