@@ -1,5 +1,6 @@
 package lachilles.games.tictactoe.api
 
+import lachilles.games.tictactoe.impl.IllegalMoveException
 import lachilles.games.tictactoe.impl.InvalidPlayerException
 import lachilles.games.tictactoe.service.TicTacToeService
 import org.springframework.beans.factory.annotation.Autowired
@@ -64,6 +65,8 @@ class TicTacToeController {
             service.takeTurn(game, row, col, playerId)
         } catch (d: InvalidPlayerException) {
             throw BadRequestException(message="Not your turn")
+        } catch (e: IllegalMoveException) {
+            throw BadRequestException(message="That space is already taken")
         }
         return GameResponse.fromGame(game)
     }

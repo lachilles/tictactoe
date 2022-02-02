@@ -70,6 +70,18 @@ class TictactoeControllerTests {
     }
 
     @Test
+    fun testPlayerTakesSameMove() {
+        val game = createGame()
+        addPlayerToGame(game, "lianne")
+        addPlayerToGame(game, "paul")
+        takeTurn(game.id, 1,1,1)
+        mockMvc.perform(put("/takeTurn/${game.id}/1/1?playerId=2").contentType
+        ("application/json"))
+                .andExpect(status().is4xxClientError())
+                .andReturn()
+    }
+
+    @Test
     fun testCreateAndAddTwoLiannes() {
         val game = createGame()
         addPlayerToGame(game, "lianne")

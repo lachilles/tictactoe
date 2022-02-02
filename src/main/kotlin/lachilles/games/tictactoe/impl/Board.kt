@@ -16,6 +16,9 @@ class Board {
         // handle conversion of string to int
         // python pseudocode
         // takes a list of the previous state with the memento pattern
+        if (elements[move.row][move.column].getValue() != 0) {
+            throw IllegalMoveException()
+        }
 
         elements[move.row][move.column].setState(player.id)
     }
@@ -85,4 +88,7 @@ class Board {
             BoardElement(2, 2)
     )
     private val elements = listOf(row1, row2, row3)
+}
+
+class IllegalMoveException : RuntimeException() {
 }
