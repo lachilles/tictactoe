@@ -58,6 +58,24 @@ class TictactoeControllerTests {
     }
 
     @Test
+    fun testDetectWinner() {
+        val game = createGame()
+        addPlayerToGame(game, "lianne")
+        addPlayerToGame(game, "paul")
+        takeTurn(game.id, 1,1,1)
+        takeTurn(game.id, 1,2,2)
+        takeTurn(game.id, 0,0,1)
+        takeTurn(game.id, 1,0,2)
+        val endGame = takeTurn(game.id, 2,2,1)
+        println(endGame.board)
+        assertEquals("lianne", endGame.winner?.name)
+        mockMvc.perform(put("/takeTurn/${endGame.id}/2/0?playerId=2").contentType
+        ("application/json"))
+                .andExpect(status().is4xxClientError())
+                .andReturn()
+    }
+
+    @Test
     fun testSamePlayerTakesTurn() {
         val game = createGame()
         addPlayerToGame(game, "lianne")

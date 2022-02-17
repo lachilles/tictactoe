@@ -1,5 +1,6 @@
 package lachilles.games.tictactoe.impl
 
+import java.util.stream.Collectors
 import java.util.stream.Stream
 
 //interface ValidMoveProvider {
@@ -23,32 +24,32 @@ class Board {
         elements[move.row][move.column].setState(player.id)
     }
 
-//    fun getWinningSequences(): List<List<BoardElement>> {
-//        val result: MutableList<List<BoardElement>> = emptyList<List<BoardElement>>()
-//                .toMutableList()
-//        // get the rows
-//        for (r in 0..2) {
-//            result.add(elements[r])
-//        }
-//        // get the columns
-//        for (c in 0..2) {
-//            result.add(elements.stream()
-//                    .flatMap { m -> m.stream() }
-//                    .filter{ it.col == c }
-//                    .collect(Collectors.toList()))
-//        }
-//        // get the diagonal
-//        result.add(elements.stream()
-//                .flatMap { m -> m.stream() }
-//                .filter{ it.col == it.row }
-//                .collect(Collectors.toList()))
-//        // get the other diagonal
-//        result.add(elements.stream()
-//                .flatMap { m -> m.stream() }
-//                .filter{ it.col == 2 - it.row }
-//                .collect(Collectors.toList()))
-//        return result;
-//    }
+    fun getWinningSequences(): List<List<BoardElement>> {
+        val result: MutableList<List<BoardElement>> = emptyList<List<BoardElement>>()
+                .toMutableList()
+        // get the rows
+        for (r in 0..2) {
+            result.add(elements[r])
+        }
+        // get the columns
+        for (c in 0..2) {
+            result.add(elements.stream()
+                    .flatMap { m -> m.stream() }
+                    .filter{ it.col == c }
+                    .collect(Collectors.toList()))
+        }
+        // get the diagonal
+        result.add(elements.stream()
+                .flatMap { m -> m.stream() }
+                .filter{ it.col == it.row }
+                .collect(Collectors.toList()))
+        // get the other diagonal
+        result.add(elements.stream()
+                .flatMap { m -> m.stream() }
+                .filter{ it.col == 2 - it.row }
+                .collect(Collectors.toList()))
+        return result;
+    }
 
 //    internal fun setState(gameState: String) {
 //        val it = gameState.splitToSequence(" ", "\n").iterator()

@@ -1,5 +1,6 @@
 package lachilles.games.tictactoe.api
 
+import lachilles.games.tictactoe.impl.EndOfGameException
 import lachilles.games.tictactoe.impl.IllegalMoveException
 import lachilles.games.tictactoe.impl.InvalidPlayerException
 import lachilles.games.tictactoe.service.TicTacToeService
@@ -67,6 +68,8 @@ class TicTacToeController {
             throw BadRequestException(message="Not your turn")
         } catch (e: IllegalMoveException) {
             throw BadRequestException(message="That space is already taken")
+        } catch (f: EndOfGameException) {
+            throw BadRequestException(message="The game has ended already")
         }
         return GameResponse.fromGame(game)
     }
