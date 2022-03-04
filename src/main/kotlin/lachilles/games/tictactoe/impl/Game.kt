@@ -2,12 +2,17 @@ package lachilles.games.tictactoe.impl
 
 import java.util.*
 
+enum class GameState {
+    NEW, IN_PROGRESS, FINISHED
+}
+
 class Game(var id: String = UUID.randomUUID().toString()) {
 
     val players: MutableList<Player> = mutableListOf()
     var board: Board? = null
     var nextPlayer: Player? = null
     var winner: Player? = null
+    var gameState = GameState.NEW
 
     fun addPlayer(p: Player) {
         val existing = players.stream().map { it.name }.anyMatch { it == p.name }
@@ -24,11 +29,12 @@ class Game(var id: String = UUID.randomUUID().toString()) {
         }
         if (players.size == 2) {
             board = Board()
+            gameState = GameState.IN_PROGRESS
         }
     }
 
     fun takeTurn(player: Player, move: Move) {
-        if (winner != null) {
+        if (gameState == GameState.FINISHED) {
             throw EndOfGameException()
         }
 
@@ -40,12 +46,11 @@ class Game(var id: String = UUID.randomUUID().toString()) {
             it.takeTurn(player, move)
             WinnerDetector().detectWinner(it, players[0], players[1])
         }
-        if (winner == null) {
+        if (winner == null && board != null && board!!.anyEmptyElements()) {
             nextPlayer = swapPlayers()
+        } else {
+            gameState = GameState.FINISHED
         }
-
-        // todo: if we have a winner then set nextPLayer to null and
-        // todo: set nextPlayer to be null when you reach 9 moves
     }
 
     private fun swapPlayers(): Player {

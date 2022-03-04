@@ -51,6 +51,23 @@ class Board {
         return result;
     }
 
+    fun anyEmptyElements(): Boolean {
+//        // get the rows
+//        for (r in 0..2) {
+//            // get the columns
+//            for (c in 0..2) {
+//                if (elements[r][c].getValue() == 0) {
+//                    return true
+//                }
+//            }
+//        }
+//        return false
+        // functional programming approach (same as above, you don't have to keep track of index)
+        return streamElements().filter {
+            it.isEmpty()
+        }.count() > 0
+    }
+
 //    internal fun setState(gameState: String) {
 //        val it = gameState.splitToSequence(" ", "\n").iterator()
 //        for (r in 0..2) {

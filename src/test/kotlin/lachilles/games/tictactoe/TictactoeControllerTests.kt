@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import lachilles.games.tictactoe.api.GameResponse
 import lachilles.games.tictactoe.api.PlayerResponse
 import lachilles.games.tictactoe.api.TicTacToeController
+import lachilles.games.tictactoe.impl.GameState
 import lachilles.games.tictactoe.service.TicTacToeService
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -73,6 +74,25 @@ class TictactoeControllerTests {
         ("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
+    }
+
+    @Test
+    fun testDetectDraw() {
+        val game = createGame()
+        addPlayerToGame(game, "lianne")
+        addPlayerToGame(game, "paul")
+        takeTurn(game.id, 0,0,1)
+        takeTurn(game.id, 0,1,2)
+        takeTurn(game.id, 0,2,1)
+        takeTurn(game.id, 1,1,2)
+        takeTurn(game.id, 1,0,1)
+        takeTurn(game.id, 1,2,2)
+        takeTurn(game.id, 2,1,1)
+        takeTurn(game.id, 2,0,2)
+        val endGame = takeTurn(game.id, 2,2,1)
+        println(endGame.board)
+        assertEquals(GameState.FINISHED, endGame.status)
+        assertNull(endGame.winner)
     }
 
     @Test
