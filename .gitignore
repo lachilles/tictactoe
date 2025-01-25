@@ -1,0 +1,16 @@
+# Gradle build system files and cache
+.gradle/
+
+# SDKMAN version manager configuration
+.sdkmanrc
+
+# Binary output directories
+bin/
+build/
+
+# IntelliJ IDEA IDE files and directories
+.idea/
+*.iml
+
+# Output directory for compiled classes
+out/

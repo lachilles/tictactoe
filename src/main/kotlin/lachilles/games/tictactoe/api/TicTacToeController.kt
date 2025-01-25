@@ -8,16 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
-class TicTacToeController {
+@RequestMapping("/api")
+@CrossOrigin(origins = ["*"])
+class TicTacToeController(private val service: TicTacToeService) {
 
-    @Autowired
-    lateinit var service: TicTacToeService
-
-    @PostMapping("/createGame")
+    @PostMapping("/game")
     fun createGame(): GameResponse {
-        return GameResponse.fromGame(service.createNewGame())
+        val game = service.createNewGame()
+        return GameResponse.fromGame(game)
     }
 
     @PostMapping("/createPlayer/{gameId}")
@@ -71,6 +70,12 @@ class TicTacToeController {
         } catch (f: EndOfGameException) {
             throw BadRequestException(message="The game has ended already")
         }
+        return GameResponse.fromGame(game)
+    }
+
+    @PostMapping("/reset")
+    fun resetGame(): GameResponse {
+        val game = service.createNewGame()
         return GameResponse.fromGame(game)
     }
 

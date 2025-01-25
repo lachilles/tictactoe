@@ -101,8 +101,7 @@ class TictactoeControllerTests {
         addPlayerToGame(game, "lianne")
         addPlayerToGame(game, "paul")
         takeTurn(game.id, 1,1,1)
-        mockMvc.perform(put("/takeTurn/${game.id}/1/1?playerId=1").contentType
-        ("application/json"))
+        mockMvc.perform(put("/api/takeTurn/${game.id}/1/1?playerId=1").contentType("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
     }
@@ -113,8 +112,7 @@ class TictactoeControllerTests {
         addPlayerToGame(game, "lianne")
         addPlayerToGame(game, "paul")
         takeTurn(game.id, 1,1,1)
-        mockMvc.perform(put("/takeTurn/${game.id}/1/1?playerId=2").contentType
-        ("application/json"))
+        mockMvc.perform(put("/api/takeTurn/${game.id}/1/1?playerId=2").contentType("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
     }
@@ -123,14 +121,14 @@ class TictactoeControllerTests {
     fun testCreateAndAddTwoLiannes() {
         val game = createGame()
         addPlayerToGame(game, "lianne")
-        mockMvc.perform(post("/createPlayer/${game.id}?playerName=lianne").contentType("application/json"))
+        mockMvc.perform(post("/api/createPlayer/${game.id}?playerName=lianne").contentType("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
     }
 
     @Test
     fun testAddPlayerToInvalidGame() {
-        mockMvc.perform(post("/createPlayer/0325-32452-262626-2362?playerName=lianne").contentType("application/json"))
+        mockMvc.perform(post("/api/createPlayer/0325-32452-262626-2362?playerName=lianne").contentType("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
     }
@@ -140,28 +138,27 @@ class TictactoeControllerTests {
         val game = createGame()
         addPlayerToGame(game, "lianne")
         addPlayerToGame(game, "paul")
-        mockMvc.perform(post("/createPlayer/${game.id}?playerName=john").contentType("application/json"))
+        mockMvc.perform(post("/api/createPlayer/${game.id}?playerName=john").contentType("application/json"))
                 .andExpect(status().is4xxClientError())
                 .andReturn()
     }
 
     private fun createGame() : GameResponse {
-        val result = mockMvc.perform(post("/createGame").contentType("application/json"))
+        val result = mockMvc.perform(post("/api/game").contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn()
         return objectMapper.readValue<GameResponse>(result.response.contentAsString, GameResponse::class.java)
     }
 
     private fun addPlayerToGame(game: GameResponse, playerName: String) : GameResponse {
-        val result = mockMvc.perform(post("/createPlayer/${game.id}?playerName=$playerName").contentType("application/json"))
+        val result = mockMvc.perform(post("/api/createPlayer/${game.id}?playerName=$playerName").contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn()
         return objectMapper.readValue<GameResponse>(result.response.contentAsString, GameResponse::class.java)
-
     }
 
     private fun getGameState(gameId: String): GameResponse {
-        val result = mockMvc.perform(get("/getGameState/${gameId}")
+        val result = mockMvc.perform(get("/api/getGameState/${gameId}")
                 .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -169,7 +166,7 @@ class TictactoeControllerTests {
     }
 
     private fun takeTurn(gameId: String, row: Int, col: Int, playerId: Int): GameResponse {
-        val result = mockMvc.perform(put("/takeTurn/${gameId}/${row}/${col}?playerId=$playerId")
+        val result = mockMvc.perform(put("/api/takeTurn/${gameId}/${row}/${col}?playerId=$playerId")
                 .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andReturn()
